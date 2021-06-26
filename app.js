@@ -147,12 +147,7 @@ app.use(compression());
 // // NOT FOUND
 
 app.get("/", (req, res) => {
-  const filePath = path.resolve(
-    __dirname,
-    "../frontend",
-    "build",
-    "index.html"
-  );
+  const filePath = path.resolve(__dirname, "./frontend", "build", "index.html");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       return console.error(err);
@@ -173,7 +168,7 @@ app.get("/course/:id", async (req, res) => {
     console.log("🚀 ~ file: app.js ~ line 169 ~ app.get ~ resource", resource);
     const filePath = path.resolve(
       __dirname,
-      "../frontend",
+      "./frontend",
       "build",
       "index.html"
     );
