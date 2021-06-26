@@ -39,11 +39,11 @@ app.enable("trust proxy");
 
 // // 1) GLOBAL MIDDLEWARES
 
-app.use(cors({ credentials: true }));
+app.use(cors());
 // app.use(cors({ credentials: true, origin: "https://coursesbackend.web.app" }));
 // Access-Control-Allow-Origin *
 
-app.options("*", cors());
+// app.options("*", cors());
 // // app.options('/api/v1/tours/:id', cors());
 
 // // Set security HTTP headers
@@ -200,7 +200,7 @@ app.get("/course/:id", async (req, res) => {
   } catch (err) {
     const filePath = path.resolve(
       __dirname,
-      "../frontend",
+      "./frontend",
       "build",
       "index.html"
     );
@@ -219,7 +219,7 @@ app.get("/course/:id", async (req, res) => {
   }
 });
 
-app.use(express.static(path.resolve(__dirname, "../frontend", "build")));
+app.use(express.static(path.resolve(__dirname, "./frontend", "build")));
 
 app.use("/api/v1/scrap", webScrapingRoute);
 app.use("/api/v1/courses", coursesRoutes);
