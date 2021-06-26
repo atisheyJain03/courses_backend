@@ -147,7 +147,7 @@ app.use(compression());
 // // NOT FOUND
 
 app.get("/", (req, res) => {
-  const filePath = path.resolve(__dirname, "./frontend", "build", "index.html");
+  const filePath = path.resolve(__dirname, "frontend", "build", "index.html");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       return console.error(err);
@@ -166,12 +166,7 @@ app.get("/course/:id", async (req, res) => {
       resource = await Course.findById(req.params.id);
     }
     console.log("🚀 ~ file: app.js ~ line 169 ~ app.get ~ resource", resource);
-    const filePath = path.resolve(
-      __dirname,
-      "./frontend",
-      "build",
-      "index.html"
-    );
+    const filePath = path.resolve(__dirname, "frontend", "build", "index.html");
     fs.readFile(filePath, "utf8", (err, data) => {
       if (data) {
         if (resource) {
@@ -198,12 +193,7 @@ app.get("/course/:id", async (req, res) => {
 
     // res.send(data);
   } catch (err) {
-    const filePath = path.resolve(
-      __dirname,
-      "./frontend",
-      "build",
-      "index.html"
-    );
+    const filePath = path.resolve(__dirname, "frontend", "build", "index.html");
     console.log(
       "🚀 ~ file: coursesRoutes.js ~ line 11 ~ getAllCourse ~ err",
       err
@@ -219,7 +209,7 @@ app.get("/course/:id", async (req, res) => {
   }
 });
 
-app.use(express.static(path.resolve(__dirname, "./frontend", "build")));
+app.use(express.static(path.resolve(__dirname, "frontend", "build")));
 
 app.use("/api/v1/scrap", webScrapingRoute);
 app.use("/api/v1/courses", coursesRoutes);
