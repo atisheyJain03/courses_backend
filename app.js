@@ -1,5 +1,7 @@
 import express from "express";
-// import path from "path";
+import path from "path";
+import fs from "fs";
+const __dirname = path.resolve();
 // import session from "express-session";
 // // FOR ENVIRONMENT VARIABLES
 // import dotenv from "dotenv";
@@ -28,6 +30,7 @@ import cors from "cors";
 
 import webScrapingRoute from "./routes/webScrapingRoutes.js";
 import coursesRoutes from "./routes/coursesRoutes.js";
+import Course from "./models/courseModel.js";
 const app = express();
 
 app.enable("trust proxy");
@@ -143,11 +146,91 @@ app.use(compression());
 // });
 // // NOT FOUND
 
+app.get("/", (req, res) => {
+  const filePath = path.resolve(
+    __dirname,
+    "../frontend",
+    "build",
+    "index.html"
+  );
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      return console.error(err);
+    }
+    data = data.replace(/__TITLE__/g, "Hello World");
+    console.log("🚀 ~ file: app.js ~ line 155 ~ fs.readFile ~ data", data);
+    res.send(data);
+  });
+});
+
+app.get("/course/:id", async (req, res) => {
+  try {
+    console.log(req.params);
+    let resource = null;
+    if (req.params.id != "foreground.bundle.js") {
+      resource = await Course.findById(req.params.id);
+    }
+    console.log("🚀 ~ file: app.js ~ line 169 ~ app.get ~ resource", resource);
+    const filePath = path.resolve(
+      __dirname,
+      "../frontend",
+      "build",
+      "index.html"
+    );
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (data) {
+        if (resource) {
+          data = data
+            .replace(/__TITLE__/g, resource.title)
+            .replace(/__HEADING__/g, resource.heading)
+            .replace(/__ID__/g, resource._id)
+            .replace(/__IMAGE__/g, resource.image)
+            .replace(/__TIME/g, resource.createdAt);
+        }
+      }
+      res.send(data);
+    });
+    // console.log("🚀 ~ file: app.js ~ line 181 ~ app.get ~ data", data);
+    // console.log("🚀 ~ file: app.js ~ line 182 ~ app.get ~ resource", resource);
+    // if (resource) {
+    //   data = data
+    //     .replace(/__TITLE__/g, resource.title)
+    //     .replace(/__HEADING__/g, resource.heading)
+    //     .replace(/__ID__/g, resource._id)
+    //     .replace(/__IMAGE__/g, resource.image)
+    //     .replace(/__TIME/g, resource.createdAt);
+    // }
+
+    // res.send(data);
+  } catch (err) {
+    const filePath = path.resolve(
+      __dirname,
+      "../frontend",
+      "build",
+      "index.html"
+    );
+    console.log(
+      "🚀 ~ file: coursesRoutes.js ~ line 11 ~ getAllCourse ~ err",
+      err
+    );
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (data) {
+        res.send(data);
+      }
+      if (err) {
+        res.send(err);
+      }
+    });
+  }
+});
+
+app.use(express.static(path.resolve(__dirname, "../frontend", "build")));
+
 app.use("/api/v1/scrap", webScrapingRoute);
 app.use("/api/v1/courses", coursesRoutes);
-app.use("/", (req, res) => {
-  res.send("BACKEND OF UDEMY COURSE PROJECT");
-});
+// app.use("/", (req, res) => {
+//   res.send("BACKEND OF UDEMY COURSE PROJECT");
+// });
 
 // app.all("*", (req, res, next) => {
 //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

@@ -4,7 +4,7 @@ import http from "http";
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
   console.log(err.name, err.message);
-  process.exit(1);
+  // process.exit(1);
 });
 
 dotenv.config({ path: "./config.env" });
@@ -40,15 +40,15 @@ server.listen(port, () => {
 process.on("unhandledRejection", (err) => {
   console.log("UNHANDLED REJECTION! 💥 Shutting down...");
   console.log(err.name, err.message);
-  server.close(() => {
-    process.exit(1);
-  });
+  // server.close(() => {
+  //   process.exit(1);
+  // });
 });
 
 // SIGTERM IS SPECIFIC TO TERMINATE SERVER AND WILL CLOSE THE SERVER ON DEMAND
 process.on("SIGTERM", () => {
   console.log("👋 SIGTERM RECEIVED. Shutting down gracefully");
-  server.close(() => {
-    console.log("💥 Process terminated!");
-  });
+  // server.close(() => {
+  //   console.log("💥 Process terminated!");
+  // });
 });
