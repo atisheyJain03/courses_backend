@@ -36,7 +36,8 @@ app.enable("trust proxy");
 
 // // 1) GLOBAL MIDDLEWARES
 
-app.use(cors({ credentials: true }));
+// app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: "https://coursesbackend.web.app" }));
 // Access-Control-Allow-Origin *
 
 app.options("*", cors());
