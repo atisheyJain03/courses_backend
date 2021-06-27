@@ -1,8 +1,8 @@
-import axios from "axios";
-import Cheerio from "cheerio";
-import Puppeteer from "puppeteer";
-import fs from "fs";
-import Course from "../models/courseModel.js";
+const axios = require("axios");
+const Cheerio = require("cheerio");
+const Puppeteer = require("puppeteer");
+
+const Course = require("../models/courseModel");
 
 const getLinksFromUnravest = async (url) => {
   const selector =
@@ -132,7 +132,7 @@ const udemy = async (siteArr) => {
 //     console.error(err);
 //   });
 
-export const scrapUsingCheerio = async (req, res) => {
+const scrapUsingCheerio = async (req, res) => {
   try {
     console.log(req.body);
     const linkArr = await getLinksFromUnravest(req.body.link);
@@ -162,11 +162,19 @@ export const scrapUsingCheerio = async (req, res) => {
   }
 };
 
-export const checkCourses = async (req, res) => {
+const checkCourses = async (req, res) => {
   try {
-    const dataLinks = await Course.find({ status: "active" }).select("url");
+    const pg = req.params.page;
+    const skip = (pg - 1) * 30;
+    // this.query = this.query.skip(skip).skip(skip).limit(20);
+    const dataLinks = await Course.find({ status: "active" })
+      .select("url")
+      .skip(skip)
+      .limit(20);
 
-    const browser = await Puppeteer.launch({ headless: false });
+    const browser = await Puppeteer.launch({
+      headless: false,
+    });
 
     const retArray = [];
 
@@ -216,3 +224,5 @@ export const checkCourses = async (req, res) => {
     res.status(500).json({ error: error });
   }
 };
+
+module.exports = { checkCourses, scrapUsingCheerio };

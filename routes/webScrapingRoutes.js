@@ -1,13 +1,12 @@
-import express from "express";
-import {
-  checkCourses,
+const express = require("express");
+const {
   scrapUsingCheerio,
-} from "../controller/scrapingController.js";
-
+  checkCourses,
+} = require("../controller/scrapingController");
 const router = express.Router();
 
 // CREATE QUEUE
 router.post("/", scrapUsingCheerio);
-router.get("/checkPrice", checkCourses);
+router.get("/checkPrice/:page", checkCourses);
 
-export default router;
+module.exports = router;

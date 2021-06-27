@@ -1,9 +1,15 @@
-import express from "express";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const express = require("express");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
+const compression = require("compression");
+const fs = require("fs");
+// import path from "path";
+// import fs from "fs";
+// import { fileURLToPath } from "url";
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 // import session from "express-session";
 // // FOR ENVIRONMENT VARIABLES
 // import dotenv from "dotenv";
@@ -11,16 +17,17 @@ const __dirname = path.dirname(__filename);
 
 // // IMPORTS FROM NODE MODULES
 // import helmet from "helmet";
-import morgan from "morgan";
+// import morgan from "morgan";
 // import rateLimit from "express-rate-limit";
 
 // import expressMongoSanitize from "express-mongo-sanitize";
 // import mongoSanitize from "express-mongo-sanitize";
 // import xss from "xss-clean";
 // import hpp from "hpp";
-import bodyParser from "body-parser";
-import compression from "compression";
-import cors from "cors";
+const webScrapingRoute = require("./routes/webScrapingRoutes.js");
+const coursesRoutes = require("./routes/coursesRoutes.js");
+const Course = require("./models/courseModel.js");
+const app = express();
 
 // // IMPORT FROM OTHER MODULES
 // import AppError from "./utils/appError.js";
@@ -30,10 +37,11 @@ import cors from "cors";
 // import queueRouter from "./routes/queueRoutes.js";
 // import serviceRouter from "./routes/serviceRoutes.js";
 
-import webScrapingRoute from "./routes/webScrapingRoutes.js";
-import coursesRoutes from "./routes/coursesRoutes.js";
-import Course from "./models/courseModel.js";
-const app = express();
+// import webScrapingRoute from "./routes/webScrapingRoutes.js";
+// import coursesRoutes from "./routes/coursesRoutes.js";
+// import Course from "./models/courseModel.js";
+// import path from "path/win32";
+// const app = express();
 
 app.enable("trust proxy");
 
@@ -236,4 +244,4 @@ app.use("/api/v1/courses", coursesRoutes);
 // // GLOBAL ERROR HANDLER
 // app.use(globalErrorHandler);
 
-export default app;
+module.exports = app;

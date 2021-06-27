@@ -1,6 +1,6 @@
-import Mongoose from "mongoose";
-import dotenv from "dotenv";
-import http from "http";
+const Mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const http = require("http");
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
   console.log(err.name, err.message);
@@ -8,7 +8,7 @@ process.on("uncaughtException", (err) => {
 });
 
 dotenv.config({ path: "./config.env" });
-import app from "./app.js";
+const app = require("./app.js");
 
 // CONNECT DB
 const DB = process.env.DATABASE.replace(

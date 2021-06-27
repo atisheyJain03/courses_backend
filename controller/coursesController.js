@@ -1,10 +1,6 @@
-import axios from "axios";
-import Cheerio from "cheerio";
-import Puppeteer from "puppeteer";
-import fs from "fs";
-import Course from "../models/courseModel.js";
+const Course = require("../models/courseModel");
 
-export const getAllCourse = async (req, res) => {
+const getAllCourse = async (req, res) => {
   try {
     const data = await Course.find();
     res.status(200).json({
@@ -22,7 +18,7 @@ export const getAllCourse = async (req, res) => {
   }
 };
 
-export const getOneCourse = async (req, res) => {
+const getOneCourse = async (req, res) => {
   try {
     console.log(req.params);
     const data = await Course.findById(req.params.id);
@@ -39,3 +35,4 @@ export const getOneCourse = async (req, res) => {
     });
   }
 };
+module.exports = { getAllCourse, getOneCourse };

@@ -5,104 +5,64 @@ import fs from "fs";
 import puppeteer from "puppeteer";
 
 const udemy = async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  const weChromeEndpoint =
+    "ws://127.0.0.1:9222/devtools/browser/55458520-3b0c-418d-a643-d4590a11f0c6";
 
-  let siteArr = ["https://www.tutorialbar.com/"];
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: weChromeEndpoint,
+    slowMo: 20,
+  });
+
+  const sleep = async (ms) => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res();
+      }, ms);
+    });
+  };
+
+  const fbPageClick = async (selector) => {
+    try {
+      await fbPage.click(selector);
+    } catch (e) {
+      console.log("error on fbPage.click, try fbPage.evaluate");
+      await fbPage.evaluate((selector) => {
+        const button = document.querySelector(selector);
+        if (button) {
+          button.click();
+        } else {
+          throw "no element found for click";
+        }
+      }, selector);
+    }
+  };
+
+  const ID = {
+    login: "#m_login_email", //m.facebook login email input
+    pass: "#m_login_password", //m.facebook login password input
+    loginButton:
+      'button[data-sigil="touchable login_button_block m_login_button"]', //m.facebook login subbmit button
+    groupComposer: '#MRoot div[role="button"]',
+    groupComposerTextFiled:
+      'textarea[data-sigil="composer-textarea m-textarea-input"]',
+    groupSendPostBtn: 'button[data-sigil="submit_composer"]',
+  };
 
   try {
-    const page = await browser.newPage();
-    for (const link of siteArr) {
-      console.log(
-        "🚀 ~ file: index.js ~ line 22 ~ siteArr.forEach ~ link",
-        link
-      );
-      await page.goto(link, { waitUntil: "load", timeout: 0 });
-
-      await page.waitForSelector(
-        "#rh_clmgrid_1297241533 > article > div.content_constructor.pb0.pr20.pl20.mobilepadding > h3 > a"
-      );
-      // await page.click(
-      //   "#rh_clmgrid_1297241533 > article > div.content_constructor.pb0.pr20.pl20.mobilepadding > h3 > a"
-      // );
-
-      let elem = await page.evaluate(() => {
-        let elements = document.querySelectorAll(
-          "#rh_clmgrid_1297241533 > article > div.content_constructor.pb0.pr20.pl20.mobilepadding > h3 > a"
-        ).href;
-
-        return elements;
-      });
-      let myArray = [];
-      console.log("🚀 ~ file: index.js ~ line 36 ~ udemy ~ myArray", myArray);
-      console.log("🚀 ~ file: index.js ~ line 37 ~ udemy ~ elem", elem);
-
-      for (let element of myArray) {
-        await element.click();
-        const btn =
-          "body > div.rh-outer-wrap > div.rh-container > div > div > div > div.single_custom_bottom.mt10.mb10.margincenter.text-center.clearbox > div > div > div > span > a";
-
-        await page.waitForSelector(btn);
-        const values = await page.evaluate((btn) => {
-          const val = {};
-          val.link = document.querySelector(btn)
-            ? document.querySelector(btn).href
-            : "";
-
-          return val;
-        }, btn);
-        console.log("🚀 ~ file: index.js ~ line 46 ~ values ~ values", values);
-      }
-
-      // const btn =
-      //   "body > div.rh-outer-wrap > div.rh-container > div > div > div > div.single_custom_bottom.mt10.mb10.margincenter.text-center.clearbox > div > div > div > span > a";
-
-      // await page.waitForSelector(btn);
-
-      // const values = await page.evaluate((btn) => {
-      //   const val = {};
-      //   val.link = document.querySelector(btn)
-      //     ? document.querySelector(btn).href
-      //     : "";
-
-      //   return val;
-      // }, btn);
-      // console.log("🚀 ~ file: index.js ~ line 46 ~ values ~ values", values);
-
-      // const selector = {};
-      // const priceElem =
-      //   "#udemy > div.main-content-wrapper > div.main-content > div.paid-course-landing-page__container > div.sidebar-container-position-manager > div > div > div > div.course-landing-page_sidebar-container > div > div:nth-child(1) > div.sidebar-container--purchase-section--17KRp > div > div.generic-purchase-section--buy-box-main--siIXV > div > div:nth-child(2) > div > div";
-
-      // await page.waitForFunction(
-      //   (priceElem) => document.querySelector(priceElem).innerText.length > 0,
-      //   {},
-      //   priceElem
-      // );
-
-      // selector.priceValElem =
-      //   "#udemy > div.main-content-wrapper > div.main-content > div.paid-course-landing-page__container > div.top-container.dark-background > div > div > div.course-landing-page__main-content.course-landing-page__purchase-section__main.dark-background-inner-text-container > div > div > div > div > div.generic-purchase-section--buy-box-main--siIXV > div > div:nth-child(2) > div > div > div.price-text--price-part--Tu6MH.udlite-clp-discount-price.udlite-heading-xxl > span:nth-child(2)";
-
-      // selector.TitleElem =
-      //   "#udemy > div.main-content-wrapper > div.main-content > div.paid-course-landing-page__container > div.top-container.dark-background > div > div > div:nth-child(4) > div > div.udlite-text-sm.clp-lead > div.clp-component-render > h1";
-
-      // selector.headingElem =
-      //   "#udemy > div.main-content-wrapper > div.main-content > div.paid-course-landing-page__container > div.top-container.dark-background > div > div > div:nth-child(4) > div > div.udlite-text-sm.clp-lead > div.clp-component-render > div";
-
-      // selector.imageElem =
-      //   "#udemy > div.main-content-wrapper > div.main-content > div.paid-course-landing-page__container > div.top-container.dark-background > div > div > div.course-landing-page__introduction-asset__main > div > div > div > div > div > button > span.intro-asset--img-aspect--1UbeZ > img";
-
-      // const values = await page.evaluate((selector) => {
-      //   const val = {};
-      //   val.price = document.querySelector(selector.priceValElem)
-      //     ? document.querySelector(selector.priceValElem).innerText
-      //     : "";
-      //   val.title = document.querySelector(selector.TitleElem).innerText;
-      //   val.heading = document.querySelector(selector.headingElem).innerText;
-      //   val.image = document.querySelector(selector.imageElem).src;
-      //   return val;
-      // }, selector);
-
-      // console.log({ values });
-    }
+    const fbPage = await browser.newPage();
+    await fbPage.goto("https://www.facebook.com/groups/548558866554350", {
+      waitUntil: "networkidle2",
+      timeout: 0,
+    });
+    await sleep(3000);
+    await fbPage.waitForSelector(ID.groupComposer);
+    await fbPageClick(ID.groupComposer);
+    await sleep(3000);
+    await fbPage.waitForSelector(ID.groupComposerTextFiled);
+    await fbPageClick(ID.groupComposerTextFiled);
+    await fbPage.keyboard.type("Hello World" + " ");
+    await sleep(10000);
+    console.log("puppeteer gotoGroupAndPost typing contents success");
   } catch (e) {
     console.log(e);
   }

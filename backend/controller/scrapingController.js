@@ -132,7 +132,7 @@ const udemy = async (siteArr) => {
 //     console.error(err);
 //   });
 
-export const scrapUsingCheerio = async (req, res) => {
+const scrapUsingCheerio = async (req, res) => {
   try {
     console.log(req.body);
     const linkArr = await getLinksFromUnravest(req.body.link);
