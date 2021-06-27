@@ -155,7 +155,7 @@ app.get("/", (req, res) => {
       return console.error(err);
     }
     data = data.replace(/__TITLE__/g, "Hello World");
-    console.log("🚀 ~ file: app.js ~ line 155 ~ fs.readFile ~ data", data);
+    // console.log("🚀 ~ file: app.js ~ line 155 ~ fs.readFile ~ data", data);
     res.send(data);
   });
 });
