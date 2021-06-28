@@ -37,7 +37,7 @@ function Homepage() {
         setLoading(false);
       });
   }, []);
-  // console.log(data);
+  console.log(data);
 
   if (error) return <ErrorPage />;
   if (loading) return <Loader />;
@@ -55,6 +55,7 @@ function Homepage() {
                 time={val.createdAt}
                 url={val.url}
                 id={val._id}
+                createdAt={val.createdAt}
               />
             </Grid>
           </Fragment>

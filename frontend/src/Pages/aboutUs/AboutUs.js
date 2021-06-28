@@ -1,13 +1,18 @@
 import React from "react";
-import { makeStyles, Paper, Grid, IconButton } from "@material-ui/core";
+import { makeStyles, Grid, IconButton } from "@material-ui/core";
 import logo from "../../images/inqueue_full.png";
-import { Link } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
 
 const useStyles = makeStyles({
   par: {
+    // padding: "20%",
     paddingTop: "40px",
-    padding: "70px",
+    paddingLeft: "10vw",
+    paddingRight: "10vw",
+    color: "#050a30",
+  },
+  about: {
+    fontWeight: 600,
   },
   root: {
     maxWidth: 345,
@@ -29,9 +34,8 @@ const useStyles = makeStyles({
   },
   img: {
     // display: "block",
-    width: "200px",
-    cursor: "pointer",
-    maxWidth: "fit-content",
+
+    maxWidth: "80vw",
     // marginLeft: "30px",
     // marginLeft: "7%",
   },
@@ -42,27 +46,27 @@ const useStyles = makeStyles({
   },
   fbIcon: {
     color: "#050a30",
+    fontSize: 96,
   },
 });
 
-function Header() {
+function AboutUs() {
   const classes = useStyles();
-
   return (
     <div className={classes.par}>
-      <Paper elevation={0}>
-        <Grid container>
-          <Grid item xs={12} md={10}>
-            <Link to="/">
-              <img src={logo} className={classes.img} />
-            </Link>
-          </Grid>
-          <Grid item xs={12} md={1}>
-            <Link to="/about" className={classes.link}>
-              about us
-            </Link>
-          </Grid>
-          <Grid item xs={12} md={1}>
+      <Grid container>
+        <Grid item xs={12} md={5}>
+          <img src={logo} className={classes.img} />
+        </Grid>
+        <Grid item xs={12} md={7}>
+          <div className={classes.about}>
+            Here at inqueue.co.in we provide you the discount coupon codes for
+            the paid Udemy courses.We update our data daily Hence the chances of
+            getting the expired coupon code is very low.To get the daily updates
+            follow us on our facebook group
+          </div>
+          <div>
+            <h1>Follow us on</h1>
             <IconButton
               onClick={() =>
                 window.open(
@@ -75,11 +79,11 @@ function Header() {
             >
               <FacebookIcon className={classes.fbIcon} />
             </IconButton>
-          </Grid>
+          </div>
         </Grid>
-      </Paper>
+      </Grid>
     </div>
   );
 }
 
-export default Header;
+export default AboutUs;

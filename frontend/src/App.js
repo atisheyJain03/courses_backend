@@ -7,6 +7,7 @@ import CoursePage from "./Pages/coursePage/CoursePage.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 import Header from "./components/header/Header";
+import AboutUs from "./Pages/aboutUs/AboutUs.js";
 
 const useStyles = makeStyles({
   root: {
@@ -34,7 +35,9 @@ function App() {
           <Route path="/course/:id" exact>
             <CoursePage />
           </Route>
-
+          <Route path="/about">
+            <AboutUs />
+          </Route>
           <Route path="*">
             <ErrorPage />
           </Route>

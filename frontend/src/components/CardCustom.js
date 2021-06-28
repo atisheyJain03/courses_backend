@@ -8,27 +8,45 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import "./Ribbon.css";
+import moment from "moment-timezone";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 320,
     textAlign: "start",
-    height: 360,
+    // height: 360,
     marginBottom: 30,
     "& .MuiCardActionArea-root": {
-      height: "100%",
+      height: "90%",
+    },
+    "& .MuiCardContent-root": {
+      height: 200,
+      overflowY: "hidden",
     },
   },
   media: {
     height: 140,
   },
-  heading: {},
+  heading: {
+    height: 96,
+  },
   cardArea: {
-    height: "100%",
+    // height: 96,
   },
 });
 
-export default function CardCustom({ image, title, heading, status, id }) {
+const getTime = (time) => {
+  return moment(time).fromNow();
+};
+
+export default function CardCustom({
+  image,
+  title,
+  heading,
+  status,
+  id,
+  createdAt,
+}) {
   const classes = useStyles();
   return (
     <Card
@@ -56,6 +74,11 @@ export default function CardCustom({ image, title, heading, status, id }) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      <CardActions>
+        <Typography variant="caption" align="right" display="block">
+          Added {getTime(createdAt)}
+        </Typography>
+      </CardActions>
     </Card>
   );
 }
