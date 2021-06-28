@@ -33,8 +33,12 @@ app.get("/", (req, res) => {
     if (err) {
       return console.error(err);
     }
-    data = data.replace(/__TITLE__/g, "Hello World");
-    // console.log("🚀 ~ file: app.js ~ line 155 ~ fs.readFile ~ data", data);
+    data = data
+      .replace(/__TITLE__/g, "inQueue")
+      .replace(
+        /__HEADING__/g,
+        "HEre you can get discount coupon code for paid udemy courses"
+      );
     res.send(data);
   });
 });

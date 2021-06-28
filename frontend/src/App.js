@@ -6,6 +6,7 @@ import axios from "./axios";
 import CoursePage from "./Pages/coursePage/CoursePage.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage";
+import Header from "./components/header/Header";
 
 const useStyles = makeStyles({
   root: {
@@ -24,6 +25,7 @@ function App() {
   return (
     <div>
       <Router>
+        <Header />
         <Switch>
           <Route path="/" exact>
             <Homepage />

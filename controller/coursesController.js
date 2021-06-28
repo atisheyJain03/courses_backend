@@ -2,7 +2,10 @@ const Course = require("../models/courseModel");
 
 const getAllCourse = async (req, res) => {
   try {
-    const data = await Course.find();
+    const data = await Course.find().sort({
+      status: 1,
+      createdAt: -1,
+    });;
     res.status(200).json({
       length: data.length,
       data,
