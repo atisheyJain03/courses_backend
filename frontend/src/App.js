@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 import Header from "./components/header/Header";
 import AboutUs from "./Pages/aboutUs/AboutUs.js";
-
+import SearchBar from "./components/searchBar/SearchBar";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 function App() {
   return (
     <div>
+      {/* <SearchBar /> */}
       <Router>
         <Header />
         <Switch>
