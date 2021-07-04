@@ -65,7 +65,7 @@ app.get("/course/:id", async (req, res) => {
             .replace(/__HEADING__/g, resource.heading)
             .replace(/__ID__/g, resource._id)
             .replace(/__IMAGE__/g, resource.image)
-            .replace(/__TIME/g, resource.createdAt);
+            .replace(/__TIME__/g, resource.createdAt);
         }
       }
       res.send(data);

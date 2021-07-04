@@ -7,6 +7,7 @@ import ErrorPage from "./../ErrorPage/ErrorPage";
 import Loader from "../../components/Loader/Loader";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import { unstable_batchedUpdates } from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,16 +94,18 @@ function Homepage() {
     );
     setData(result);
   };
-
+  // console.log("rendering...");
   useEffect(() => {
     axios
       .get("/courses")
       .then((res) => {
-        setRealData(res.data.data);
-        setData(res.data.data);
         const result = res.data.data.filter((word) => word.status === "active");
-        setActiveData(result);
-        setLoading(false);
+        unstable_batchedUpdates(() => {
+          setRealData(res.data.data);
+          setData(res.data.data);
+          setActiveData(result);
+          setLoading(false);
+        });
       })
       .catch((err) => {
         // console.log("🚀 ~ file: Homepage.js ~ line 35 ~ useEffect ~ err", err);
@@ -143,8 +146,6 @@ function Homepage() {
                 image={val.image}
                 heading={val.heading}
                 status={val.status}
-                time={val.createdAt}
-                url={val.url}
                 id={val._id}
                 createdAt={val.createdAt}
               />
