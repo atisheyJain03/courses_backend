@@ -96,4 +96,20 @@ app.use(express.static(path.resolve(__dirname, "./frontend", "build")));
 
 app.use("/api/v1/courses", coursesRoutes);
 
+app.use("*", (req, res) => {
+  const filePath = path.resolve(__dirname, "./frontend", "build", "index.html");
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      return err;
+    }
+    data = data
+      .replace(/__TITLE__/g, "inQueue")
+      .replace(
+        /__HEADING__/g,
+        "Here you can get discount coupon code for paid udemy courses"
+      );
+    res.send(data);
+  });
+});
+
 module.exports = app;
