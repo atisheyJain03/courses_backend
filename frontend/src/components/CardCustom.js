@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     },
     "& .MuiCardContent-root": {
       height: 200,
-      overflowY: "hidden",
+      overflow: "hidden",
     },
   },
   media: {
@@ -29,6 +29,7 @@ const useStyles = makeStyles({
   },
   heading: {
     height: 96,
+    overflow: "hidden",
   },
   cardArea: {
     // height: 96,
@@ -55,7 +56,7 @@ export default function CardCustom({
     >
       <CardActionArea className={classes.actionArea}>
         <span className={status === "active" ? "ribbonGreen" : "ribbonRed"}>
-          <span>{status === "active" ? "Available" : "Expired"}</span>
+          <span>{status === "active" ? "Active" : "Expired"}</span>
         </span>
         <CardMedia className={classes.media} image={image} title={title} />
         <CardContent>

@@ -5,16 +5,12 @@ const getAllCourse = async (req, res) => {
     const data = await Course.find().sort({
       status: 1,
       createdAt: -1,
-    });;
+    });
     res.status(200).json({
       length: data.length,
       data,
     });
   } catch (err) {
-    console.log(
-      "🚀 ~ file: coursesRoutes.js ~ line 11 ~ getAllCourse ~ err",
-      err
-    );
     res.status(500).json({
       err,
     });
@@ -23,16 +19,12 @@ const getAllCourse = async (req, res) => {
 
 const getOneCourse = async (req, res) => {
   try {
-    console.log(req.params);
+    // console.log(req.params);
     const data = await Course.findById(req.params.id);
     res.status(200).json({
       data,
     });
-  } catch (error) {
-    console.log(
-      "🚀 ~ file: coursesRoutes.js ~ line 11 ~ getAllCourse ~ err",
-      err
-    );
+  } catch (err) {
     res.status(500).json({
       err,
     });

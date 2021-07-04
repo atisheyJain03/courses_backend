@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    // backgroundColor: fade(theme.palette.common.white, 0.15),
-    // "&:hover": {
-    //   backgroundColor: fade(theme.palette.common.white, 0.25),
-    // },
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -79,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 function Homepage() {
   const classes = useStyles();
   const [realData, setRealData] = useState([]);
+  const [activeData, setActiveData] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -87,7 +84,11 @@ function Homepage() {
   const handleSearch = (event) => {
     const val = event.target.value;
     setSearch(val);
-    const result = realData.filter((word) =>
+    if (!val) {
+      setData(realData);
+      return;
+    }
+    const result = activeData.filter((word) =>
       word.title.toLowerCase().includes(val.toLowerCase())
     );
     setData(result);
@@ -99,15 +100,16 @@ function Homepage() {
       .then((res) => {
         setRealData(res.data.data);
         setData(res.data.data);
+        const result = res.data.data.filter((word) => word.status === "active");
+        setActiveData(result);
         setLoading(false);
       })
       .catch((err) => {
-        console.log("🚀 ~ file: Homepage.js ~ line 35 ~ useEffect ~ err", err);
+        // console.log("🚀 ~ file: Homepage.js ~ line 35 ~ useEffect ~ err", err);
         setError(true);
         setLoading(false);
       });
   }, []);
-  // console.log(data);
 
   if (error) return <ErrorPage />;
   if (loading) return <Loader />;

@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const http = require("http");
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
-  console.log(err.name, err.message);
+  // console.log(err.name, err.message);
   // process.exit(1);
 });
 
@@ -15,7 +15,7 @@ const DB = process.env.DATABASE.replace(
   "<password>",
   process.env.DATABASE_PASS
 );
-console.log("🚀 ~ file: server.js ~ line 18 ~ DB", DB);
+// console.log("🚀 ~ file: server.js ~ line 18 ~ DB", DB);
 Mongoose.connect(DB, {
   useNewUrlParser: true,
   useCreateIndex: true,

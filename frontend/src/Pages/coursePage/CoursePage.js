@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MetaDecorative from "../../utils/MetaDecorative";
-import { Typography, Button, makeStyles } from "@material-ui/core";
+import { Chip, Typography, Button, makeStyles } from "@material-ui/core";
 import axios from "../../axios";
 import ErrorPage from "./../ErrorPage/ErrorPage";
 import Loader from "./../../components/Loader/Loader";
@@ -25,6 +25,20 @@ const useStyles = makeStyles({
       background: "#111e6c",
     },
   },
+  expired: {
+    color: "black",
+    background: "#f8433f",
+    fontWeight: "600",
+    marginBottom: "10px",
+    letterSpacing: 1.5,
+  },
+  available: {
+    color: "black",
+    background: "#adff2f",
+    fontWeight: "600",
+    marginBottom: "10px",
+    letterSpacing: 1,
+  },
 });
 
 function CoursePage() {
@@ -32,17 +46,14 @@ function CoursePage() {
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  // console.log("&&&&&&&&&&");
   useEffect(() => {
     axios
       .get(`/courses/${window.location.href.split("/")[4]}`)
       .then((res) => {
         setData(res.data.data);
-        // console.log(res.data.data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
         setError(true);
         setLoading(false);
       });
@@ -53,7 +64,7 @@ function CoursePage() {
   return (
     <div className={classes.root}>
       {!data ? (
-        <h1>Loading...</h1>
+        <ErrorPage />
       ) : (
         <>
           <MetaDecorative
@@ -64,6 +75,12 @@ function CoursePage() {
             time={data.time}
           />
           <img src={data.image} alt={data.title} className={classes.img} />
+          <Chip
+            label={data.status === "active" ? "Active" : "Expired"}
+            className={
+              data.status === "active" ? classes.available : classes.expired
+            }
+          />
           <Typography variant="h3" gutterBottom>
             {data.title}
           </Typography>

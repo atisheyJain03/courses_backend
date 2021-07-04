@@ -31,13 +31,13 @@ app.get("/", (req, res) => {
   const filePath = path.resolve(__dirname, "./frontend", "build", "index.html");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
-      return console.error(err);
+      return err;
     }
     data = data
       .replace(/__TITLE__/g, "inQueue")
       .replace(
         /__HEADING__/g,
-        "HEre you can get discount coupon code for paid udemy courses"
+        "Here you can get discount coupon code for paid udemy courses"
       );
     res.send(data);
   });
@@ -45,12 +45,12 @@ app.get("/", (req, res) => {
 
 app.get("/course/:id", async (req, res) => {
   try {
-    console.log(req.params);
+    // console.log(req.params);
     let resource = null;
     if (req.params.id != "foreground.bundle.js") {
       resource = await Course.findById(req.params.id);
     }
-    console.log("🚀 ~ file: app.js ~ line 169 ~ app.get ~ resource", resource);
+    // console.log("🚀 ~ file: app.js ~ line 169 ~ app.get ~ resource", resource);
     const filePath = path.resolve(
       __dirname,
       "./frontend",
@@ -77,10 +77,10 @@ app.get("/course/:id", async (req, res) => {
       "build",
       "index.html"
     );
-    console.log(
-      "🚀 ~ file: coursesRoutes.js ~ line 11 ~ getAllCourse ~ err",
-      err
-    );
+    // console.log(
+    //   "🚀 ~ file: coursesRoutes.js ~ line 11 ~ getAllCourse ~ err",
+    //   err
+    // );
     fs.readFile(filePath, "utf8", (err, data) => {
       if (data) {
         res.send(data);
