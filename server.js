@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const http = require("http");
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
-  // console.log(err.name, err.message);
+  console.log(err.name, err.message);
   // process.exit(1);
 });
 
@@ -38,6 +38,7 @@ server.listen(port, () => {
 
 // FOR ANY UNHANDLED ERROR THIS WILL CLOSE THE SERVER
 process.on("unhandledRejection", (err) => {
+  console.log("🚀 ~ file: server.js ~ line 41 ~ process.on ~ err", err);
   console.log("UNHANDLED REJECTION! 💥 Shutting down...");
   console.log(err.name, err.message);
   // server.close(() => {
