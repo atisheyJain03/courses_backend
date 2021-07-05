@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getAllCourse,
   getOneCourse,
+  incCount,
 } = require("../controller/coursesController.js");
 
 const router = express.Router();
