@@ -4,11 +4,17 @@ import { Chip, Typography, Button, makeStyles } from "@material-ui/core";
 import axios from "../../axios";
 import ErrorPage from "./../ErrorPage/ErrorPage";
 import Loader from "./../../components/Loader/Loader";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 const useStyles = makeStyles({
   root: {
     width: "80%",
     margin: "auto",
+    "& .MuiChip-root": {
+      marginRight: "10px",
+      minWidth: "50px",
+      marginBottom: "10px",
+    },
   },
 
   img: {
@@ -28,16 +34,16 @@ const useStyles = makeStyles({
   expired: {
     color: "black",
     background: "#f8433f",
-    fontWeight: "600",
-    marginBottom: "10px",
-    letterSpacing: 1.5,
+    // fontWeight: "600",
+    // marginBottom: "10px",
+    // letterSpacing: 1.5,
   },
   available: {
     color: "black",
     background: "#adff2f",
-    fontWeight: "600",
-    marginBottom: "10px",
-    letterSpacing: 1,
+    // fontWeight: "600",
+    // marginBottom: "10px",
+    // letterSpacing: 1,
   },
 });
 
@@ -81,6 +87,7 @@ function CoursePage() {
               data.status === "active" ? classes.available : classes.expired
             }
           />
+          <Chip icon={<VisibilityIcon />} label={data.clicks} />
           <Typography variant="h3" gutterBottom>
             {data.title}
           </Typography>

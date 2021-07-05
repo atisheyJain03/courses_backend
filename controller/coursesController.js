@@ -20,7 +20,13 @@ const getAllCourse = async (req, res) => {
 const getOneCourse = async (req, res) => {
   try {
     // console.log(req.params);
-    const data = await Course.findById(req.params.id);
+    const data = await Course.findByIdAndUpdate(
+      req.params.id,
+      {
+        $inc: { clicks: 1 },
+      },
+      { new: true }
+    );
     res.status(200).json({
       data,
     });

@@ -9,7 +9,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import "./Ribbon.css";
 import moment from "moment-timezone";
-
+import { Chip } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 const useStyles = makeStyles({
   root: {
     maxWidth: 320,
@@ -23,6 +24,11 @@ const useStyles = makeStyles({
       height: 200,
       overflow: "hidden",
     },
+    "& .MuiChip-root": {
+      marginRight: "10px",
+      minWidth: "50px",
+      marginBottom: "10px",
+    },
   },
   media: {
     height: 140,
@@ -33,6 +39,20 @@ const useStyles = makeStyles({
   },
   cardArea: {
     // height: 96,
+  },
+  expired: {
+    color: "black",
+    background: "#f8433f",
+    // fontWeight: "600",
+    // marginBottom: "10px",
+    letterSpacing: 1,
+  },
+  available: {
+    color: "black",
+    background: "#adff2f",
+    // fontWeight: "600",
+    // marginBottom: "10px",
+    letterSpacing: 1,
   },
 });
 
@@ -47,6 +67,7 @@ export default function CardCustom({
   status,
   id,
   createdAt,
+  clicks,
 }) {
   const classes = useStyles();
   return (
@@ -55,11 +76,22 @@ export default function CardCustom({
       onClick={() => window.open(`/course/${id}`, "_blank")}
     >
       <CardActionArea className={classes.actionArea}>
-        <span className={status === "active" ? "ribbonGreen" : "ribbonRed"}>
-          <span>{status === "active" ? "Active" : "Expired"}</span>
-        </span>
         <CardMedia className={classes.media} image={image} title={title} />
+
         <CardContent>
+          <Chip
+            size="small"
+            label={status === "active" ? "Active" : "Expired"}
+            className={
+              status === "active" ? classes.available : classes.expired
+            }
+          />
+          <Chip
+            // variant="outlined"
+            size="small"
+            icon={<VisibilityIcon />}
+            label={clicks}
+          />
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
