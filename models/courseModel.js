@@ -10,6 +10,10 @@ const courseSchema = new mongoose.Schema(
       enum: ["active", "expired"],
     },
     url: String,
+    clicks: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

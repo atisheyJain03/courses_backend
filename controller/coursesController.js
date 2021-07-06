@@ -19,7 +19,7 @@ const getAllCourse = async (req, res) => {
 
 const getOneCourse = async (req, res) => {
   try {
-    // console.log(req.params);
+    console.log(req.params);
     const data = await Course.findById(req.params.id);
     res.status(200).json({
       data,
@@ -32,10 +32,18 @@ const getOneCourse = async (req, res) => {
 };
 const incCount = async (req, res) => {
   try {
-    console.log(req.params);
-    const data = await Course.findByIdAndUpdate(req.params.id, {
-      $inc: { clicks: 1 },
-    });
+    // console.log("********* " + req.params.id);
+    const data = await Course.findByIdAndUpdate(
+      req.params.id,
+      {
+        $inc: { clicks: 1 },
+      },
+      { new: true }
+    );
+    // console.log(
+    //   "🚀 ~ file: coursesController.js ~ line 39 ~ incCount ~ data",
+    //   data
+    // );
     res.status(200).json({
       status: "success",
     });

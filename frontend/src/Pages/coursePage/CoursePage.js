@@ -54,6 +54,7 @@ function CoursePage() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios.post(`/courses/${window.location.href.split("/")[4]}`);
+
     axios
       .get(`/courses/${window.location.href.split("/")[4]}`)
       .then((res) => {
