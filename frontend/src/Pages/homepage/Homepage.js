@@ -100,7 +100,7 @@ function Homepage() {
       .get("/courses")
       .then((res) => {
         const result = res.data.data.filter((word) => word.status === "active");
-        console.log(res.data.data);
+        // console.log(res.data.data);
         unstable_batchedUpdates(() => {
           setRealData(res.data.data);
           setData(res.data.data);
