@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import MetaDecorative from "../../utils/MetaDecorative";
-import { Chip, Typography, Button, makeStyles } from "@material-ui/core";
+import { Chip, Typography, Button, makeStyles, Grid } from "@material-ui/core";
 import axios from "../../axios";
 import ErrorPage from "./../ErrorPage/ErrorPage";
 import Loader from "./../../components/Loader/Loader";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import CardCustom from "../../components/CardCustom";
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
   },
   btn: {
     margin: "20px auto",
+    maxWidth: "fit-content",
     background: "#111e6c",
     "& a": {
       background: "#111e6c",
@@ -45,6 +47,13 @@ const useStyles = makeStyles({
     // marginBottom: "10px",
     // letterSpacing: 1,
   },
+  otherCourses: {
+    textTransform: "uppercase",
+    borderBottom: "3px solid #050a30",
+    textAlign: "-webkit-center",
+    marginBottom: "20px",
+    paddingBottom: "10px",
+  },
 });
 
 function CoursePage() {
@@ -52,9 +61,13 @@ function CoursePage() {
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [topSix, setTopSix] = useState([]);
   useEffect(() => {
     axios.post(`/courses/${window.location.href.split("/")[4]}`);
-
+    axios
+      .get(`/courses/clicks/topSix`)
+      .then((res) => setTopSix(res.data.data))
+      .catch((err) => setError(true));
     axios
       .get(`/courses/${window.location.href.split("/")[4]}`)
       .then((res) => {
@@ -98,12 +111,38 @@ function CoursePage() {
             <Button
               variant="contained"
               color="secondary"
-              fullWidth
+              // fullWidth
               href={data.url}
               size="large"
             >
               Enroll Now
             </Button>
+          </div>
+          <div>
+            <Typography
+              variant="h5"
+              gutterBottom
+              className={classes.otherCourses}
+            >
+              other top courses
+            </Typography>
+            <Grid container alignItems="center" justify="center">
+              {topSix.map((val, ind) => (
+                <Fragment key={val._id}>
+                  <Grid item xs={12} sm={6} lg={4} className={classes.card}>
+                    <CardCustom
+                      title={val.title}
+                      image={val.image}
+                      heading={val.heading}
+                      status={val.status}
+                      id={val._id}
+                      createdAt={val.createdAt}
+                      clicks={val.clicks}
+                    />
+                  </Grid>
+                </Fragment>
+              ))}
+            </Grid>
           </div>
         </>
       )}

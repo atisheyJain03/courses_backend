@@ -40,10 +40,6 @@ const incCount = async (req, res) => {
       },
       { new: true }
     );
-    // console.log(
-    //   "🚀 ~ file: coursesController.js ~ line 39 ~ incCount ~ data",
-    //   data
-    // );
     res.status(200).json({
       status: "success",
     });
@@ -57,4 +53,21 @@ const incCount = async (req, res) => {
     });
   }
 };
-module.exports = { getAllCourse, getOneCourse, incCount };
+const getTopSix = async (req, res) => {
+  try {
+    const data = await Course.find({ status: "active" })
+      .sort({
+        clicks: -1,
+      })
+      .limit(6);
+    res.status(200).json({
+      status: "success",
+      data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      err,
+    });
+  }
+};
+module.exports = { getAllCourse, getOneCourse, incCount, getTopSix };
