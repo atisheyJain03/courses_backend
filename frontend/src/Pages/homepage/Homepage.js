@@ -8,6 +8,8 @@ import Loader from "../../components/Loader/Loader";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { unstable_batchedUpdates } from "react-dom";
+import Axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,52 +73,106 @@ const useStyles = makeStyles((theme) => ({
     color: "#050a30",
     letterSpacing: "2px",
   },
+  loader: {
+    transform: "translateY(-20px)",
+    marginBottom: 20,
+  },
+  seenAll: {
+    fontWeight: "500",
+    letterSpacing: "2px",
+    lineHeight: "20px",
+  },
 }));
+
+let cancelTokenSearch;
 
 function Homepage() {
   const classes = useStyles();
-  const [realData, setRealData] = useState([]);
-  const [activeData, setActiveData] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [prevData, setPrevData] = useState([]);
+  const [loadMore, setLoadMore] = useState(true);
+
+  const pageHandler = () => {
+    axios
+      .get(`/courses/allCourses/${page + 1}`)
+      .then((res) => {
+        if (res.data.data.length == 0) {
+          setLoadMore(false);
+        }
+        unstable_batchedUpdates(() => {
+          setData((data) => [...data, ...res.data.data]);
+          setPrevData((data) => [...data, ...res.data.data]);
+          setPage((page) => page + 1);
+        });
+      })
+      .catch((err) => {
+        unstable_batchedUpdates(() => {
+          setError(true);
+        });
+      });
+  };
 
   const handleSearch = (event) => {
     const val = event.target.value;
-    setSearch(val);
+
     if (!val) {
-      setData(realData);
+      setData(prevData);
+      setSearch(val);
       return;
     }
-    const result = activeData.filter((word) =>
-      word.title.toLowerCase().includes(val.toLowerCase())
-    );
-    setData(result);
-  };
-  // console.log("rendering...");
-  useEffect(() => {
+    setSearch(val);
+    setLoading(true);
+    setData([]);
+
+    if (typeof cancelTokenSearch != typeof undefined) {
+      cancelTokenSearch.cancel("cancelling previous search");
+    }
+    cancelTokenSearch = Axios.CancelToken.source();
+
+    const body = { title: val };
     axios
-      .get("/courses")
+      .post("/courses/searchCourse/search", body, {
+        cancelToken: cancelTokenSearch.token,
+      })
       .then((res) => {
-        const result = res.data.data.filter((word) => word.status === "active");
-        // console.log(res.data.data);
         unstable_batchedUpdates(() => {
-          setRealData(res.data.data);
-          setData(res.data.data);
-          setActiveData(result);
+          setData((data) => [...data, ...res.data.data]);
           setLoading(false);
         });
       })
       .catch((err) => {
-        // console.log("🚀 ~ file: Homepage.js ~ line 35 ~ useEffect ~ err", err);
-        setError(true);
-        setLoading(false);
+        if (err.message != "cancelling previous search") {
+          unstable_batchedUpdates(() => {
+            setError(true);
+            setLoading(false);
+          });
+        }
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get("/courses/allCourses/1")
+      .then((res) => {
+        unstable_batchedUpdates(() => {
+          setData((data) => [...data, ...res.data.data]);
+          setPrevData((data) => [...data, ...res.data.data]);
+          setLoading(false);
+        });
+      })
+      .catch((err) => {
+        unstable_batchedUpdates(() => {
+          setError(true);
+          setLoading(false);
+        });
       });
   }, []);
 
   if (error) return <ErrorPage />;
-  if (loading) return <Loader />;
   return (
     <div className="App">
       <div className={classes.searchBar}>
@@ -137,24 +193,47 @@ function Homepage() {
           />
         </div>
       </div>
-      <h4 className={classes.result}>result - {data.length}</h4>
-      <Grid container alignItems="center" justify="center">
-        {data.map((val, ind) => (
-          <Fragment key={val._id}>
-            <Grid item xs={12} sm={6} lg={4} className={classes.card}>
-              <CardCustom
-                title={val.title}
-                image={val.image}
-                heading={val.heading}
-                status={val.status}
-                id={val._id}
-                createdAt={val.createdAt}
-                clicks={val.clicks}
-              />
-            </Grid>
-          </Fragment>
-        ))}
-      </Grid>
+      {loading && <Loader />}
+      <InfiniteScroll
+        dataLength={data.length}
+        next={pageHandler}
+        endMessage={
+          !search.length && (
+            <h3 className={classes.seenAll}>Yay! You have seen it all</h3>
+          )
+        }
+        scrollThreshold={0.8}
+        hasMore={!search.length && loadMore}
+        loader={
+          <div className={classes.loader}>
+            <Loader />
+          </div>
+        }
+        scrollableTarget="scrollableDiv"
+      >
+        <>
+          {search.length > 0 && !loading && (
+            <h4 className={classes.result}>result - {data.length}</h4>
+          )}
+        </>
+        <Grid container alignItems="center" justify="center">
+          {data.map((val, ind) => (
+            <Fragment key={val._id}>
+              <Grid item xs={12} sm={6} lg={4} className={classes.card}>
+                <CardCustom
+                  title={val.title}
+                  image={val.image}
+                  heading={val.heading}
+                  status={val.status}
+                  id={val._id}
+                  createdAt={val.createdAt}
+                  clicks={val.clicks}
+                />
+              </Grid>
+            </Fragment>
+          ))}
+        </Grid>
+      </InfiniteScroll>
     </div>
   );
 }
