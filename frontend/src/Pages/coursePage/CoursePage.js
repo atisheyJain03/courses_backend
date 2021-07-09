@@ -63,7 +63,7 @@ function CoursePage() {
   const [loading, setLoading] = useState(true);
   const [topSix, setTopSix] = useState([]);
   useEffect(() => {
-    // axios.post(`/courses/${window.location.href.split("/")[4]}`);
+    axios.post(`/courses/${window.location.href.split("/")[4]}`);
     axios
       .get(`/courses/clicks/topSix`)
       .then((res) => setTopSix(res.data.data))
