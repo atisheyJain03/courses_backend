@@ -50,9 +50,12 @@ const useStyles = makeStyles({
   otherCourses: {
     textTransform: "uppercase",
     borderBottom: "3px solid #050a30",
-    textAlign: "-webkit-center",
+    // textAlign: "-webkit-center",
     marginBottom: "20px",
     paddingBottom: "10px",
+  },
+  link: {
+    color: "red",
   },
 });
 
@@ -107,6 +110,14 @@ function CoursePage() {
             {data.title}
           </Typography>
           <Typography variant="h6">{data.heading}</Typography>
+
+          <p className={classes.link}>
+            <span style={{ textTransform: "uppercase", fontWeight: "600" }}>
+              link -{" "}
+            </span>{" "}
+            {data.url}
+          </p>
+
           <div className={classes.btn} style={{ background: "#11136c" }}>
             <Button
               variant="contained"

@@ -158,8 +158,8 @@ function Homepage() {
       .get("/courses/allCourses/1")
       .then((res) => {
         unstable_batchedUpdates(() => {
-          setData((data) => [...data, ...res.data.data]);
-          setPrevData((data) => [...data, ...res.data.data]);
+          setData((data) => [...res.data.data]);
+          setPrevData((data) => [...res.data.data]);
           setLoading(false);
         });
       })
@@ -208,7 +208,6 @@ function Homepage() {
             <Loader />
           </div>
         }
-        scrollableTarget="scrollableDiv"
       >
         <>
           {search.length > 0 && !loading && (
