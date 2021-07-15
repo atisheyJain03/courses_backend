@@ -10,6 +10,7 @@ import InputBase from "@material-ui/core/InputBase";
 import { unstable_batchedUpdates } from "react-dom";
 import Axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Footer from "../../components/footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -232,6 +233,7 @@ function Homepage() {
           ))}
         </Grid>
       </InfiniteScroll>
+      {!loading ? <Footer /> : null}
     </div>
   );
 }

@@ -51,7 +51,7 @@ const useStyles = makeStyles({
   },
 });
 
-function AboutUs() {
+function AddACourse() {
   const classes = useStyles();
   return (
     <div className={classes.par}>
@@ -61,10 +61,9 @@ function AboutUs() {
         </Grid>
         <Grid item xs={12} md={7}>
           <div className={classes.about}>
-            inQueue is a Free platform . which is used to promote free courses
-            for a limited period of time. offered by various platforms and
-            organizations. By doing these courses you can early a certificate
-            and lot of Knowledge
+            To Add/Promote your udemy course on this website . you can create a
+            post having course link in facebook group mentioned below . We will
+            review and upload it on this website
           </div>
           <div>
             <h1>Follow us on</h1>
@@ -87,4 +86,4 @@ function AboutUs() {
   );
 }
 
-export default AboutUs;
+export default AddACourse;

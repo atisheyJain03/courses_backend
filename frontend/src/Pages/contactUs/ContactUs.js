@@ -11,6 +11,10 @@ const useStyles = makeStyles({
     paddingRight: "10vw",
     color: "#050a30",
     minHeight: "80vh",
+    "& a": {
+      color: "#050a30",
+      textDecoration: "underline",
+    },
   },
   about: {
     fontWeight: 600,
@@ -51,7 +55,7 @@ const useStyles = makeStyles({
   },
 });
 
-function AboutUs() {
+function ContactUs() {
   const classes = useStyles();
   return (
     <div className={classes.par}>
@@ -61,10 +65,11 @@ function AboutUs() {
         </Grid>
         <Grid item xs={12} md={7}>
           <div className={classes.about}>
-            inQueue is a Free platform . which is used to promote free courses
-            for a limited period of time. offered by various platforms and
-            organizations. By doing these courses you can early a certificate
-            and lot of Knowledge
+            You can contact us through facebook, by contacting us through
+            facebook group mentioned below .OR you can mail us at{" "}
+            <a href="mailto:inqueue.courses@gmail.com">
+              inqueue.courses@gmail.com
+            </a>
           </div>
           <div>
             <h1>Follow us on</h1>
@@ -87,4 +92,4 @@ function AboutUs() {
   );
 }
 
-export default AboutUs;
+export default ContactUs;

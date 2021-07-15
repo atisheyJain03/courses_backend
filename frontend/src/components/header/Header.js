@@ -99,29 +99,14 @@ function Header() {
     <div className={classes.par}>
       <Paper elevation={0}>
         <Grid container>
-          <Grid item xs={12} sm={8} md={10}>
+          <Grid item xs={12} md={9}>
             <Link to="/">
               <img src={logo} className={classes.img} />
             </Link>
           </Grid>
-          {/* <Grid item xs={12} md={6}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
-          </Grid> */}
-          <Grid item xs={4} sm={2} md={1}>
-            <Link to="/about" className={classes.link}>
-              about us
+          <Grid item xs={4} md={2}>
+            <Link to="/add-a-course" className={classes.link}>
+              Add a Course
             </Link>
           </Grid>
           <Grid item xs={2} sm={1}>

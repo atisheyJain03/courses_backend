@@ -9,6 +9,12 @@ import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 import Header from "./components/header/Header";
 import AboutUs from "./Pages/aboutUs/AboutUs.js";
 import SearchBar from "./components/searchBar/SearchBar";
+import PrivacyPolicy from "./Pages/privacyPolicy/PrivacyPolicy";
+import TermAndCondition from "./Pages/t&c/TermAndCondition";
+import Footer from "./components/footer/Footer";
+import ContactUs from "./Pages/contactUs/ContactUs";
+import AddACourse from "./Pages/AddACourse/AddaCourse";
+import TopStripe from "./components/TopStripe";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -28,20 +34,40 @@ function App() {
     <div>
       {/* <SearchBar /> */}
       <Router>
+        <Route path="/" exact>
+          <TopStripe />
+        </Route>
         <Header />
         <Switch>
           <Route path="/" exact>
             <Homepage />
           </Route>
-
           <Route path="/course/:id" exact>
             <CoursePage />
           </Route>
-          <Route path="/about">
+          <Route path="/about" exact>
             <AboutUs />
+            <Footer />
+          </Route>
+          <Route path="/privacy-policy" exact>
+            <PrivacyPolicy />
+            <Footer />
+          </Route>
+          <Route path="/term-and-condition" exact>
+            <TermAndCondition />
+            <Footer />
+          </Route>
+          <Route path="/contact" exact>
+            <ContactUs />
+            <Footer />
+          </Route>
+          <Route path="/add-a-course">
+            <AddACourse />
+            <Footer />
           </Route>
           <Route path="*">
             <ErrorPage />
+            <Footer />
           </Route>
         </Switch>
       </Router>
