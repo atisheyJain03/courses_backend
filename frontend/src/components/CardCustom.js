@@ -54,6 +54,10 @@ const useStyles = makeStyles({
     // marginBottom: "10px",
     letterSpacing: 1,
   },
+  category: {
+    background: "#8710D8",
+    color: "white",
+  },
 });
 
 const getTime = (time) => {
@@ -68,6 +72,7 @@ export default function CardCustom({
   id,
   createdAt,
   clicks,
+  primaryCategory,
 }) {
   const classes = useStyles();
   return (
@@ -80,14 +85,22 @@ export default function CardCustom({
 
         <CardContent>
           <Chip
+            // variant="outlined"
+            size="small"
+            className={classes.category}
+            // icon={<VisibilityIcon />}
+            label={primaryCategory}
+          />
+          <Chip
             size="small"
             label={status === "active" ? "Active" : "Expired"}
             className={
               status === "active" ? classes.available : classes.expired
             }
           />
+
           <Chip
-            // variant="outlined"
+            variant="outlined"
             size="small"
             icon={<VisibilityIcon />}
             label={clicks}

@@ -7,6 +7,13 @@ import Loader from "./../../components/Loader/Loader";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import CardCustom from "../../components/CardCustom";
 import Footer from "../../components/footer/Footer";
+// import { decode } from "html-entities";
+import { decode, decodeEntity } from "html-entities";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2,
+} from "react-html-parser";
 
 const useStyles = makeStyles({
   root: {
@@ -20,8 +27,9 @@ const useStyles = makeStyles({
   },
 
   img: {
-    width: "100%",
-    height: "70vh",
+    maxWidth: "100%",
+    // height: "70vh",
+
     display: "block",
     margin: "auto",
     marginBottom: "30px !important",
@@ -58,6 +66,16 @@ const useStyles = makeStyles({
   link: {
     color: "red",
   },
+  category: {
+    background: "#8710D8",
+    color: "white",
+  },
+  details: {
+    letterSpacing: ".5px",
+    lineHeight: "24px",
+    color: "#212121",
+    fontWeight: "400",
+  },
 });
 
 function CoursePage() {
@@ -83,7 +101,8 @@ function CoursePage() {
         setLoading(false);
       });
   }, []);
-
+  // console.log(data);
+  // console.log(decode(data.description));
   if (error) return <ErrorPage />;
   if (loading) return <Loader />;
   return (
@@ -93,25 +112,56 @@ function CoursePage() {
           <ErrorPage />
         ) : (
           <>
-            <MetaDecorative
+            {/* <MetaDecorative
               title={data.title}
               heading={data.heading}
               image={data.image}
               url={data.url}
               time={data.time}
-            />
+            /> */}
+            <Typography variant="h3" gutterBottom>
+              {data.title}
+            </Typography>
             <img src={data.image} alt={data.title} className={classes.img} />
+
+            <Chip label={data.primaryCategory} className={classes.category} />
             <Chip
               label={data.status === "active" ? "Active" : "Expired"}
               className={
                 data.status === "active" ? classes.available : classes.expired
               }
             />
-            <Chip icon={<VisibilityIcon />} label={data.clicks} />
-            <Typography variant="h3" gutterBottom>
-              {data.title}
-            </Typography>
+
+            <Chip
+              icon={<VisibilityIcon />}
+              label={data.clicks}
+              variant="outlined"
+            />
+
             <Typography variant="h6">{data.heading}</Typography>
+
+            <div className={classes.details}>
+              <h3>What you will Learn</h3>
+              <ul>
+                {data.whatYouWillLearn.map((item, index) => (
+                  <li key={item.split(" ")[0] + index}>{item}</li>
+                ))}
+              </ul>
+              <h3>Requirements</h3>
+              <ul>
+                {data.requirements.map((item, index) => (
+                  <li key={item.split(" ")[0] + index}>{item}</li>
+                ))}
+              </ul>
+              <h3>Description</h3>
+              {ReactHtmlParser(decode(data.description)) || null}
+              <h3>Who this course is for:</h3>
+              <ul>
+                {data.whoShouldAttend.map((item, index) => (
+                  <li key={item.split(" ")[0] + index}>{item}</li>
+                ))}
+              </ul>
+            </div>
 
             <p className={classes.link}>
               <span style={{ textTransform: "uppercase", fontWeight: "600" }}>
@@ -151,6 +201,7 @@ function CoursePage() {
                         id={val._id}
                         createdAt={val.createdAt}
                         clicks={val.clicks}
+                        primaryCategory={val.primaryCategory}
                       />
                     </Grid>
                   </Fragment>

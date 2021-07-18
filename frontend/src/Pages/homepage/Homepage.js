@@ -115,7 +115,7 @@ function Homepage() {
         });
       });
   };
-
+  // console.log(data);
   const handleSearch = (event) => {
     const val = event.target.value;
 
@@ -227,6 +227,7 @@ function Homepage() {
                   id={val._id}
                   createdAt={val.createdAt}
                   clicks={val.clicks}
+                  primaryCategory={val.primaryCategory}
                 />
               </Grid>
             </Fragment>
