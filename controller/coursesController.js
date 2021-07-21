@@ -9,7 +9,7 @@ const getAllCourse = async (req, res) => {
     const data = await Course.find()
       .sort({
         status: 1,
-        updatedAt: -1,
+        createdAt: -1,
         _id: 1,
       })
       .skip((page - 1) * limit)
@@ -45,14 +45,26 @@ const getOneCourse = async (req, res) => {
 };
 const incCount = async (req, res) => {
   try {
-    // console.log("********* " + req.params.id);
-    const data = await Course.findByIdAndUpdate(
-      req.params.id,
-      {
-        $inc: { clicks: 1 },
-      },
-      { new: true }
-    );
+    let data = "";
+    const id = req.params.id;
+    if (Mongoose.isValidObjectId(id) && new Mongoose.Types.ObjectId(id) == id) {
+      data = await Course.findByIdAndUpdate(
+        id,
+        {
+          $inc: { clicks: 1 },
+        },
+        { new: true }
+      );
+    } else {
+      data = await Course.findOneAndUpdate(
+        { slug: id },
+        {
+          $inc: { clicks: 1 },
+        },
+        { new: true }
+      );
+    }
+
     res.status(200).json({
       status: "success",
     });

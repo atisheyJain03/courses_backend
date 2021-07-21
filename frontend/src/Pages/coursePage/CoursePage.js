@@ -189,7 +189,7 @@ function CoursePage() {
                         heading={val.heading}
                         status={val.status}
                         id={val.slug}
-                        createdAt={val.updatedAt}
+                        createdAt={val.createdAt}
                         clicks={val.clicks}
                         primaryCategory={val.primaryCategory}
                       />
