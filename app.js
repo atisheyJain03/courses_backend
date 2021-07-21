@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const coursesRoutes = require("./routes/coursesRoutes.js");
 const Course = require("./models/courseModel.js");
+const Mongoose = require("mongoose");
 const app = express();
 
 app.enable("trust proxy");
@@ -51,7 +52,15 @@ app.get("/course/:id", async (req, res) => {
     // console.log(req.params);
     let resource = null;
     if (req.params.id != "foreground.bundle.js") {
-      resource = await Course.findById(req.params.id);
+      const id = req.params.id;
+      if (
+        Mongoose.isValidObjectId(id) &&
+        new Mongoose.Types.ObjectId(id) == id
+      ) {
+        resource = await Course.findById(id);
+      } else {
+        resource = await Course.findOne({ slug: id });
+      }
     }
     // console.log("🚀 ~ file: app.js ~ line 169 ~ app.get ~ resource", resource);
     const filePath = path.resolve(
