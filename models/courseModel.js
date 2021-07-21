@@ -19,6 +19,11 @@ const courseSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    slug: {
+      type: String,
+      unique: true,
+    },
+    ratings: Number,
   },
   {
     timestamps: true,

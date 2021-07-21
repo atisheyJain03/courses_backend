@@ -188,8 +188,8 @@ function CoursePage() {
                         image={val.image}
                         heading={val.heading}
                         status={val.status}
-                        id={val._id}
-                        createdAt={val.createdAt}
+                        id={val.slug}
+                        createdAt={val.updatedAt}
                         clicks={val.clicks}
                         primaryCategory={val.primaryCategory}
                       />

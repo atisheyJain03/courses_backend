@@ -28,9 +28,6 @@ const useStyles = makeStyles({
       minWidth: "50px",
       marginBottom: "10px",
     },
-    "& a:hover": {
-      TextDecoder: "none",
-    },
   },
   media: {
     height: 140,
@@ -60,6 +57,10 @@ const useStyles = makeStyles({
     background: "#8710D8",
     color: "white",
   },
+  a: {
+    display: "block",
+    maxWidth: "fit-content",
+  },
 });
 
 const getTime = (time) => {
@@ -78,7 +79,7 @@ export default function CardCustom({
 }) {
   const classes = useStyles();
   return (
-    <a href={`/course/${id}`} target="_blank">
+    <a href={`/course/${id}`} className={classes.a}>
       <Card className={classes.root}>
         <CardActionArea className={classes.actionArea}>
           <CardMedia className={classes.media} image={image} title={title} />

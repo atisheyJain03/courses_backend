@@ -1,3 +1,4 @@
+const Mongoose = require("mongoose");
 const Course = require("../models/courseModel");
 
 const getAllCourse = async (req, res) => {
@@ -8,7 +9,7 @@ const getAllCourse = async (req, res) => {
     const data = await Course.find()
       .sort({
         status: 1,
-        createdAt: -1,
+        updatedAt: -1,
         _id: 1,
       })
       .skip((page - 1) * limit)
@@ -26,7 +27,13 @@ const getAllCourse = async (req, res) => {
 
 const getOneCourse = async (req, res) => {
   try {
-    const data = await Course.findById(req.params.id);
+    let data = "";
+    const id = req.params.id;
+    if (Mongoose.isValidObjectId(id) && new Mongoose.Types.ObjectId(id) == id) {
+      data = await Course.findById(id);
+    } else {
+      data = await Course.findOne({ slug: id });
+    }
     res.status(200).json({
       data,
     });

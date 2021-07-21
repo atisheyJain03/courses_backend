@@ -171,7 +171,7 @@ function Homepage() {
         });
       });
   }, []);
-
+  // console.log(data);
   if (error) return <ErrorPage />;
   return (
     <>
@@ -225,8 +225,8 @@ function Homepage() {
                     image={val.image}
                     heading={val.heading}
                     status={val.status}
-                    id={val._id}
-                    createdAt={val.createdAt}
+                    id={val.slug}
+                    createdAt={val.updatedAt}
                     clicks={val.clicks}
                     primaryCategory={val.primaryCategory}
                   />
