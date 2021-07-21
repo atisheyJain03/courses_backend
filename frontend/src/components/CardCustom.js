@@ -5,9 +5,8 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import "./Ribbon.css";
+
 import moment from "moment-timezone";
 import { Chip } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -28,6 +27,9 @@ const useStyles = makeStyles({
       marginRight: "10px",
       minWidth: "50px",
       marginBottom: "10px",
+    },
+    "& a:hover": {
+      TextDecoder: "none",
     },
   },
   media: {
@@ -76,55 +78,52 @@ export default function CardCustom({
 }) {
   const classes = useStyles();
   return (
-    <Card
-      className={classes.root}
-      onClick={() => window.open(`/course/${id}`, "_blank")}
-    >
-      <CardActionArea className={classes.actionArea}>
-        <CardMedia className={classes.media} image={image} title={title} />
+    <a href={`/course/${id}`} target="_blank">
+      <Card className={classes.root}>
+        <CardActionArea className={classes.actionArea}>
+          <CardMedia className={classes.media} image={image} title={title} />
 
-        <CardContent>
-          <Chip
-            // variant="outlined"
-            size="small"
-            className={classes.category}
-            // icon={<VisibilityIcon />}
-            label={primaryCategory}
-          />
-          <Chip
-            size="small"
-            label={status === "active" ? "Active" : "Expired"}
-            className={
-              status === "active" ? classes.available : classes.expired
-            }
-          />
+          <CardContent>
+            <Chip
+              size="small"
+              className={classes.category}
+              label={primaryCategory}
+            />
+            <Chip
+              size="small"
+              label={status === "active" ? "Active" : "Expired"}
+              className={
+                status === "active" ? classes.available : classes.expired
+              }
+            />
 
-          <Chip
-            variant="outlined"
-            size="small"
-            icon={<VisibilityIcon />}
-            label={clicks}
-          />
-          <Typography gutterBottom variant="h5" component="h2">
-            {title}
+            <Chip
+              variant="outlined"
+              size="small"
+              icon={<VisibilityIcon />}
+              label={clicks}
+            />
+            <Typography gutterBottom variant="h5" component="h2">
+              {title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              className={classes.heading}
+            >
+              {heading.length <= 120
+                ? heading
+                : heading.substring(0, 117) + "..."}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Typography variant="caption" align="right" display="block">
+            Added {getTime(createdAt)}
           </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            className={classes.heading}
-          >
-            {heading.length <= 120
-              ? heading
-              : heading.substring(0, 117) + "..."}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Typography variant="caption" align="right" display="block">
-          Added {getTime(createdAt)}
-        </Typography>
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+    </a>
   );
 }

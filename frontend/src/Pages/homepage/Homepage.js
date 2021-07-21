@@ -174,68 +174,70 @@ function Homepage() {
 
   if (error) return <ErrorPage />;
   return (
-    <div className="App">
-      <div className={classes.searchBar}>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
+    <>
+      <div className="App">
+        <div className={classes.searchBar}>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              const
+              value={search}
+              onChange={handleSearch}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
           </div>
-          <InputBase
-            placeholder="Search…"
-            const
-            value={search}
-            onChange={handleSearch}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ "aria-label": "search" }}
-          />
         </div>
+        {loading && <Loader />}
+        <InfiniteScroll
+          dataLength={data.length}
+          next={pageHandler}
+          endMessage={
+            !search.length && (
+              <h3 className={classes.seenAll}>Yay! You have seen it all</h3>
+            )
+          }
+          scrollThreshold={0.8}
+          hasMore={!search.length && loadMore}
+          loader={
+            <div className={classes.loader}>
+              <Loader />
+            </div>
+          }
+        >
+          <>
+            {search.length > 0 && !loading && (
+              <h4 className={classes.result}>result - {data.length}</h4>
+            )}
+          </>
+          <Grid container alignItems="center" justify="center">
+            {data.map((val, ind) => (
+              <Fragment key={val._id}>
+                <Grid item xs={12} sm={6} lg={4} className={classes.card}>
+                  <CardCustom
+                    title={val.title}
+                    image={val.image}
+                    heading={val.heading}
+                    status={val.status}
+                    id={val._id}
+                    createdAt={val.createdAt}
+                    clicks={val.clicks}
+                    primaryCategory={val.primaryCategory}
+                  />
+                </Grid>
+              </Fragment>
+            ))}
+          </Grid>
+        </InfiniteScroll>
       </div>
-      {loading && <Loader />}
-      <InfiniteScroll
-        dataLength={data.length}
-        next={pageHandler}
-        endMessage={
-          !search.length && (
-            <h3 className={classes.seenAll}>Yay! You have seen it all</h3>
-          )
-        }
-        scrollThreshold={0.8}
-        hasMore={!search.length && loadMore}
-        loader={
-          <div className={classes.loader}>
-            <Loader />
-          </div>
-        }
-      >
-        <>
-          {search.length > 0 && !loading && (
-            <h4 className={classes.result}>result - {data.length}</h4>
-          )}
-        </>
-        <Grid container alignItems="center" justify="center">
-          {data.map((val, ind) => (
-            <Fragment key={val._id}>
-              <Grid item xs={12} sm={6} lg={4} className={classes.card}>
-                <CardCustom
-                  title={val.title}
-                  image={val.image}
-                  heading={val.heading}
-                  status={val.status}
-                  id={val._id}
-                  createdAt={val.createdAt}
-                  clicks={val.clicks}
-                  primaryCategory={val.primaryCategory}
-                />
-              </Grid>
-            </Fragment>
-          ))}
-        </Grid>
-      </InfiniteScroll>
       {!loading ? <Footer /> : null}
-    </div>
+    </>
   );
 }
 

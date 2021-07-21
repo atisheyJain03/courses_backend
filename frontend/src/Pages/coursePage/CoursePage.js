@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import MetaDecorative from "../../utils/MetaDecorative";
+
 import { Chip, Typography, Button, makeStyles, Grid } from "@material-ui/core";
 import axios from "../../axios";
 import ErrorPage from "./../ErrorPage/ErrorPage";
@@ -9,11 +9,7 @@ import CardCustom from "../../components/CardCustom";
 import Footer from "../../components/footer/Footer";
 // import { decode } from "html-entities";
 import { decode, decodeEntity } from "html-entities";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
+import ReactHtmlParser from "react-html-parser";
 
 const useStyles = makeStyles({
   root: {
@@ -45,16 +41,10 @@ const useStyles = makeStyles({
   expired: {
     color: "black",
     background: "#f8433f",
-    // fontWeight: "600",
-    // marginBottom: "10px",
-    // letterSpacing: 1.5,
   },
   available: {
     color: "black",
     background: "#adff2f",
-    // fontWeight: "600",
-    // marginBottom: "10px",
-    // letterSpacing: 1,
   },
   otherCourses: {
     textTransform: "uppercase",

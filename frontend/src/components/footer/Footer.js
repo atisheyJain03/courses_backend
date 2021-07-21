@@ -18,12 +18,7 @@ function Footer() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        direction="row"
-      >
+      <Grid container alignItems="center" direction="row">
         <Grid item xs={12} md={2}>
           <Link to="/term-and-condition">Terms and Conditions</Link>
         </Grid>

@@ -3,8 +3,6 @@ import { makeStyles, Paper, Grid, IconButton } from "@material-ui/core";
 import logo from "../../images/inqueue_full.png";
 import { Link } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles((theme) => ({
   par: {
@@ -100,9 +98,9 @@ function Header() {
       <Paper elevation={0}>
         <Grid container>
           <Grid item xs={12} md={9}>
-            <Link to="/">
+            <a href="/">
               <img src={logo} className={classes.img} />
-            </Link>
+            </a>
           </Grid>
           <Grid item xs={4} md={2}>
             <Link to="/add-a-course" className={classes.link}>

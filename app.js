@@ -37,8 +37,11 @@ app.get("/", (req, res) => {
       .replace(/__TITLE__/g, "inQueue")
       .replace(
         /__HEADING__/g,
-        "Here you can get discount coupon code for paid udemy courses"
-      );
+        "inQueue promotes courses provided by various platforms such as udemy , coursera with heavy discount coupons"
+      )
+      .replace(/course\/__ID__/g, "")
+      .replace(/__IMAGE__/g, path.resolve(__dirname, "./inqueue_full.png"))
+      .replace(/__TIME__/g, Date.now());
     res.send(data);
   });
 });
