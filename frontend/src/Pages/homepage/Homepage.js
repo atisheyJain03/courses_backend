@@ -171,7 +171,7 @@ function Homepage() {
         });
       });
   }, []);
-  console.log(data);
+  // console.log(data);
   if (error) return <ErrorPage />;
   return (
     <>
