@@ -13,6 +13,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 const useStyles = makeStyles({
   root: {
     maxWidth: 320,
+    minWidth: 320,
     textAlign: "start",
     // height: 360,
     marginBottom: 30,
@@ -60,6 +61,13 @@ const useStyles = makeStyles({
   a: {
     display: "block",
     maxWidth: "fit-content",
+    transition: "all 0.3s",
+    "&:hover": {
+      textDecoration: "none",
+      boxShadow:
+        "0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%)",
+      transform: "scale(0.99)",
+    },
   },
 });
 
@@ -79,11 +87,10 @@ export default function CardCustom({
 }) {
   const classes = useStyles();
   return (
-    <a href={`/course/${id}`} className={classes.a}>
-      <Card className={classes.root}>
-        <CardActionArea className={classes.actionArea}>
+    <a href={`/course/${id}`} className={classes.a} target="_blank">
+      <Card className={classes.root} elevation={20}>
+        <CardActionArea className={classes.actionArea} disableRipple={true}>
           <CardMedia className={classes.media} image={image} title={title} />
-
           <CardContent>
             <Chip
               size="small"
