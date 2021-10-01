@@ -1,6 +1,13 @@
 import React, { useEffect, useState, Fragment } from "react";
 
-import { Chip, Typography, Button, makeStyles, Grid } from "@material-ui/core";
+import {
+  Chip,
+  Typography,
+  Button,
+  makeStyles,
+  Grid,
+  Card,
+} from "@material-ui/core";
 import axios from "../../axios";
 import ErrorPage from "./../ErrorPage/ErrorPage";
 import Loader from "./../../components/Loader/Loader";
@@ -66,6 +73,16 @@ const useStyles = makeStyles({
     color: "#212121",
     fontWeight: "400",
   },
+  warning: {
+    width: "80%",
+    display: "block",
+    margin: "auto",
+    padding: "20px",
+    color: "white",
+    fontWeight: "600",
+    background: "#8710d8",
+    marginBottom: "10px",
+  },
 });
 
 function CoursePage() {
@@ -97,6 +114,20 @@ function CoursePage() {
   if (loading) return <Loader />;
   return (
     <>
+      <Card className={classes.warning}>
+        <p>
+          Some coupons might not work for indian accounts.To avail those courses
+          please follow these steps
+        </p>
+        <ol>
+          <li>Use VPN and select any foreign country other than India</li>
+          <li>Open link in incognito mode</li>
+          <li>Create new udemy account </li>
+          <li>
+            At checkout , choose location which you have selected for VPN.
+          </li>
+        </ol>
+      </Card>
       <div className={classes.root}>
         {!data ? (
           <ErrorPage />

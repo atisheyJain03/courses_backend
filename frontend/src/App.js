@@ -15,6 +15,7 @@ import Footer from "./components/footer/Footer";
 import ContactUs from "./Pages/contactUs/ContactUs";
 import AddACourse from "./Pages/AddACourse/AddaCourse";
 import TopStripe from "./components/TopStripe";
+import AddCourse from "./components/AddCourse/AddCourse";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -34,6 +35,7 @@ function App() {
     <div>
       {/* <SearchBar /> */}
       <Router>
+        <AddCourse />
         <Route path="/" exact>
           <TopStripe />
         </Route>

@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const coursesRoutes = require("./routes/coursesRoutes.js");
 const Course = require("./models/courseModel.js");
+const waitingListRoutes = require("./routes/waitingListRoutes");
 const Mongoose = require("mongoose");
 const app = express();
 
@@ -123,5 +124,5 @@ app.use("*", (req, res) => {
     res.send(data);
   });
 });
-
+app.use("/api/v1/waitingList", waitingListRoutes);
 module.exports = app;

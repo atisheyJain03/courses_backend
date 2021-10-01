@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   img: {
     // display: "block",
     width: "200px",
+    height: "auto",
     cursor: "pointer",
     maxWidth: "fit-content",
     // marginLeft: "30px",

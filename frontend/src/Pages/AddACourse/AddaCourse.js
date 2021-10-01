@@ -61,8 +61,9 @@ function AddACourse() {
         </Grid>
         <Grid item xs={12} md={7}>
           <div className={classes.about}>
-            To Add/Promote your udemy course on this website . you can create a
-            post having course link in facebook group mentioned below . We will
+            To Add/Promote your udemy course on this website .Please click on
+            Plus (+) button (this would be appearing at bottom right of the
+            page),please paste the complete udemy link of the course . We will
             review and upload it on this website
           </div>
           <div>

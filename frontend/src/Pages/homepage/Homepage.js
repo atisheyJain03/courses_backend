@@ -11,6 +11,7 @@ import { unstable_batchedUpdates } from "react-dom";
 import Axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Footer from "../../components/footer/Footer";
+// import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -153,7 +154,7 @@ function Homepage() {
         }
       });
   };
-
+  // console.log(Cookies.get("jwt"));
   useEffect(() => {
     axios
       .get("/courses/allCourses/1")
@@ -183,7 +184,6 @@ function Homepage() {
             </div>
             <InputBase
               placeholder="Search…"
-              const
               value={search}
               onChange={handleSearch}
               classes={{
