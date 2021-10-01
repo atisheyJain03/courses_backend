@@ -108,7 +108,7 @@ app.get("/course/:id", async (req, res) => {
 app.use(express.static(path.resolve(__dirname, "./frontend", "build")));
 
 app.use("/api/v1/courses", coursesRoutes);
-
+app.use("/api/v1/waitingList", waitingListRoutes);
 app.use("*", (req, res) => {
   const filePath = path.resolve(__dirname, "./frontend", "build", "index.html");
   fs.readFile(filePath, "utf8", (err, data) => {
@@ -124,5 +124,5 @@ app.use("*", (req, res) => {
     res.send(data);
   });
 });
-app.use("/api/v1/waitingList", waitingListRoutes);
+
 module.exports = app;
